@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\cb1504f9b54cfa8f946d7be4f3c7f31b\sfml-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\d9ca49048b2787384e070588758d23b2\sfml-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\06803500211a14545ab40f8e149e5117\sfml-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\C++MiniProject\build\_deps\sfml-subbuild\CMakeFiles\sfml-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{AF3570C6-FE4B-3CCC-83EB-83D1AB0D7CBF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+^D:\C++MINIPROJECT\BUILD\CMAKEFILES\D01CE45E9990B52C88A927EA14B2167E\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/C++MiniProject -BD:/C++MiniProject/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/C++MiniProject/build/RacingGame.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

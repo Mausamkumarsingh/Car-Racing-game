@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+D:/C++MiniProject/build/_deps/sfml-src/cmake/Modules/FindFreetype.cmake
+D:/C++MiniProject/build/_deps/sfml-src/src/SFML/Graphics/CMakeLists.txt
+D:/C++MiniProject/build/_deps/sfml-src/tools/windows/resource.rc.in

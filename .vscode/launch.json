@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Play Racing Game",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/RelWithDebInfo/RacingGame.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/RelWithDebInfo",
+            "environment": [],
+            "console": "externalTerminal",
+            "preLaunchTask": "Build Game"
+        }
+    ]
+}

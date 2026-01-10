@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/sfml-populate"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/06803500211a14545ab40f8e149e5117/sfml-populate.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/d9ca49048b2787384e070588758d23b2/sfml-populate-complete.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-build.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-configure.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-download.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-install.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-mkdir.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-patch.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-test.rule"
+		},
+		{
+			"file" : "D:/C++MiniProject/build/_deps/sfml-subbuild/CMakeFiles/cb1504f9b54cfa8f946d7be4f3c7f31b/sfml-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"sfml-populate"
+		],
+		"name" : "sfml-populate"
+	}
+}
