@@ -8,7 +8,7 @@ public:
   PlayerCar();
 
   virtual void update(sf::Time dt) override;
-  virtual void draw(sf::RenderWindow &window) override;
+  virtual void draw(sf::RenderWindow &window, float z = 0.f) override;
 
   void handleInput();
 

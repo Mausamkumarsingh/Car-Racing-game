@@ -1,14 +1,21 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <functional>
+
+struct ZItem {
+  float y;
+  std::function<void()> drawFn;
+};
 
 class World {
 public:
   World(sf::RenderWindow &window);
   void update(sf::Time dt);
-  void draw();
+  void draw(const std::vector<ZItem>& items = {});
 
   void setScrollSpeed(float speed) { mScrollSpeed = speed; }
+  float getElevationAtScreenY(float screenY) const;
 
   struct Prop {
     sf::Vector2f pos;

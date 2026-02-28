@@ -64,7 +64,7 @@ void EnemyCar::updateAI(sf::Time dt,
   }
 }
 
-static sf::Vector2f project(float x, float y, float &outScale) {
+static sf::Vector2f project(float x, float y, float z, float &outScale) {
   float centerX = 400.f;
   float horizonY = -250.f;
   float camY = 600.f;
@@ -73,16 +73,16 @@ static sf::Vector2f project(float x, float y, float &outScale) {
   outScale = scale;
 
   float newX = centerX + (x - centerX) * scale;
-  return sf::Vector2f(newX, y);
+  return sf::Vector2f(newX, y - z * scale);
 }
 
-void EnemyCar::draw(sf::RenderWindow &window) {
+void EnemyCar::draw(sf::RenderWindow &window, float z) {
   sf::Transform originalTransform = mSprite.getTransform();
   sf::Vector2f originalPos = mSprite.getPosition();
   sf::Vector2f originalScale = mSprite.getScale();
 
   float scaleFactor = 1.0f;
-  sf::Vector2f viewPos = project(getPosition().x, getPosition().y, scaleFactor);
+  sf::Vector2f viewPos = project(getPosition().x, getPosition().y, z, scaleFactor);
 
   mSprite.setPosition(viewPos);
 

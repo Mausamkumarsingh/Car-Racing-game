@@ -46,6 +46,7 @@ private:
   sf::Text mScoreText;
   sf::Text mSpeedText;
   sf::Text mHighScoreText;
+  sf::Text mLevelText;
 
   sf::Text mMenuText;
   sf::Text mGameOverText;
@@ -57,6 +58,7 @@ private:
   float mScore;
   float mDistance;
   int mCarsPassed;
+  int mLevel;
 
   float mScreenShakeTimer;
   sf::View mGameView;

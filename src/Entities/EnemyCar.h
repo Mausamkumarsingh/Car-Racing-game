@@ -11,7 +11,7 @@ public:
   EnemyCar(float startX, float startY, float speed, Direction dir = Oncoming);
 
   virtual void update(sf::Time dt) override;
-  virtual void draw(sf::RenderWindow &window) override;
+  virtual void draw(sf::RenderWindow &window, float z = 0.f) override;
 
   void setSpeed(float speed) { mSpeed = speed; }
   float getSpeed() const { return mSpeed; }

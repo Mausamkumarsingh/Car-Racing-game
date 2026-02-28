@@ -19,7 +19,7 @@ static sf::Vector2f projectToScreen(sf::Vector2f worldPos) {
 
 Game::Game()
     : mWindow(sf::VideoMode(800, 600), "AI Racing Game - C++ SFML"),
-      mState(Menu), mScore(0.f), mDistance(0.f), mCarsPassed(0), mHighScore(0),
+      mState(Menu), mScore(0.f), mDistance(0.f), mCarsPassed(0), mLevel(1), mHighScore(0),
       mHighScoreName("None"), mIsNewHighScore(false), mScreenShakeTimer(0.f) {
   mWindow.setFramerateLimit(60);
   mGameView = mWindow.getDefaultView();
@@ -68,6 +68,13 @@ Game::Game()
   mHighScoreText.setFillColor(sf::Color::Cyan);
   mHighScoreText.setPosition(20.f, 75.f);
   mHighScoreText.setStyle(sf::Text::Bold);
+
+  mLevelText.setFont(mFont);
+  mLevelText.setCharacterSize(36);
+  mLevelText.setFillColor(sf::Color(255, 165, 0));
+  mLevelText.setStyle(sf::Text::Bold);
+  mLevelText.setOutlineColor(sf::Color::Black);
+  mLevelText.setOutlineThickness(2.f);
 
   mMenuText.setFont(mFont);
   mMenuText.setCharacterSize(40);
@@ -148,6 +155,7 @@ void Game::processEvents() {
         mScore = 0.f;
         mDistance = 0.f;
         mCarsPassed = 0;
+        mLevel = 1;
         mIsNewHighScore = false;
 
         if (mEngineSound.getStatus() != sf::Sound::Playing)
@@ -186,7 +194,6 @@ void Game::update(sf::Time deltaTime) {
   if (mState != Playing)
     return;
 
-  // 1. Reset Camera Center (Prevent Drift)
   mGameView.setCenter(400.f, 300.f);
 
   updateParticles(deltaTime);
@@ -201,29 +208,9 @@ void Game::update(sf::Time deltaTime) {
     enemy->setWorldSpeed(currentWorldSpeed);
   }
 
-  // Camera Tilt (Steering)
-  float targetRotation = 0.f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    targetRotation = -0.5f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    targetRotation = 0.5f;
-
-  float currentRotation = mGameView.getRotation();
-  if (currentRotation > 180.f)
-    currentRotation -= 360.f;
-  float rotationDiff = targetRotation - currentRotation;
-  mGameView.setRotation(currentRotation +
-                        rotationDiff * 3.0f * deltaTime.asSeconds());
-
-  // Camera Zoom (Speed FOV)
-  float zoomFactor = 1.0f + (currentWorldSpeed - 400.f) / 1000.f;
-  if (zoomFactor < 1.0f)
-    zoomFactor = 1.0f;
-  if (zoomFactor > 1.2f)
-    zoomFactor = 1.2f;
-  mGameView.setSize(800.f * zoomFactor, 600.f * zoomFactor);
+  // Camera Tilt and Zoom disabled to prevent screen background fluctuation
+  mGameView.setRotation(0.f);
+  mGameView.setSize(800.f, 600.f);
 
   // Screen Shake (Applied LAST)
   if (mScreenShakeTimer > 0.f) {
@@ -295,6 +282,11 @@ void Game::update(sf::Time deltaTime) {
     ssHS << " NEW!";
   mHighScoreText.setString(ssHS.str());
 
+  mLevel = 1 + (mCarsPassed / 10);
+  std::stringstream ssLevel;
+  ssLevel << "LEVEL " << mLevel;
+  mLevelText.setString(ssLevel.str());
+
   mSpawnTimer += deltaTime;
 
   float adjustedInterval = std::max(0.5f, 2.0f - (mCarsPassed * 0.05f));
@@ -312,7 +304,7 @@ void Game::update(sf::Time deltaTime) {
       bool overlaps = false;
       for (const auto &existing : mEnemies) {
         if (std::abs(existing->getPosition().x - laneX) < 50.f) {
-          if (existing->getPosition().y < 200.f) {
+          if (existing->getPosition().y > -400.f && existing->getPosition().y < 200.f) {
             overlaps = true;
             break;
           }
@@ -374,6 +366,8 @@ void Game::update(sf::Time deltaTime) {
       }
 
       it = mEnemies.erase(it);
+    } else if ((*it)->getPosition().y < -600.f) {
+      it = mEnemies.erase(it);
     } else {
       ++it;
     }
@@ -393,10 +387,21 @@ void Game::render() {
     mWorld->draw();
 
     for (const auto &p : mParticles) {
+      float z = mWorld->getElevationAtScreenY(p.pos.y);
+      // Let's create an external project function since particles are local here?
+      // Wait, particles pos is ALREADY projected in spawn/update.
+      // But we can just offset it manually by z * scale?
+      // Actually particles are currently drawn with p.pos.
       float size = std::max(1.f, p.life * 15.f);
       sf::RectangleShape rect(sf::Vector2f(size, size));
       rect.setOrigin(size / 2.f, size / 2.f);
-      rect.setPosition(p.pos);
+      
+      // Calculate scale to offset the particle. 
+      // y is screen space, scale = (y - (-250.f)) / (600.f - (-250.f))
+      float scale = (p.pos.y + 250.f) / 850.f;
+      sf::Vector2f finalPos = p.pos;
+      finalPos.y -= z * scale;
+      rect.setPosition(finalPos);
 
       sf::Color c = p.color;
       c.a = static_cast<sf::Uint8>(std::min(255.f, p.life * 500.f));
@@ -406,22 +411,11 @@ void Game::render() {
     }
 
     for (const auto &enemy : mEnemies) {
-      enemy->draw(mWindow);
+      float z = mWorld->getElevationAtScreenY(enemy->getPosition().y);
+      enemy->draw(mWindow, z);
     }
-    mPlayer->draw(mWindow);
-
-    // Vignette Effect
-    // Simple way: Draw 4 quads at corners or a large gradient sprite.
-    // Vertex array gradient is easier.
-    // Center is Transparent, Corners are Black(150 alpha).
-    // Actually, radial gradient is hard with stored vertices.
-    // Let's just overlay a "cinema" border or dark corners.
-    // We'll use a TriangleFan to approximate a radial gradient? No, too
-    // complex. Simple workaround: 4 quads (Top, Bottom, Left, Right) with
-    // gradient alpha. Or just a single large Rectangle with a helper texture?
-    // Let's maintain simplicity: Just darken the loop edges with a "static"
-    // overlay of a few giant quads. Or even better: A "dirty lens" effect.
-    // Let's do a simple corner darkening.
+    float playerZ = mWorld->getElevationAtScreenY(mPlayer->getPosition().y);
+    mPlayer->draw(mWindow, playerZ);
     {
       // We need to draw this in "Screen Coordinates", so we reset view
       // temporarily
@@ -482,8 +476,11 @@ void Game::render() {
     mHighScoreText.setCharacterSize(16);
     mHighScoreText.setFillColor(sf::Color(100, 255, 255));
 
+    mLevelText.setPosition(800.f - mLevelText.getLocalBounds().width - 20.f, 20.f);
+
     mWindow.draw(mScoreText);
     mWindow.draw(mHighScoreText);
+    mWindow.draw(mLevelText);
 
     // Common Dial Properties
     float dialRadius = 60.f;

@@ -6,7 +6,7 @@ public:
   virtual ~Entity() = default;
 
   virtual void update(sf::Time dt) = 0;
-  virtual void draw(sf::RenderWindow &window) = 0;
+  virtual void draw(sf::RenderWindow &window, float z = 0.f) = 0;
 
   sf::Vector2f getPosition() const { return mSprite.getPosition(); }
   void setPosition(float x, float y) { mSprite.setPosition(x, y); }
