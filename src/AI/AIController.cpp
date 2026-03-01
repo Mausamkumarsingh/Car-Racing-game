@@ -50,8 +50,9 @@ void AIController::update(
     }
   } else {
     float currentSpeed = mOwner->getSpeed();
-    if (currentSpeed < 400.f) {
-      mOwner->setSpeed(currentSpeed + 10.f);
+    float maxSpeed = (mOwner->getDirection() == EnemyCar::Oncoming) ? 200.f : 180.f;
+    if (currentSpeed < maxSpeed) {
+      mOwner->setSpeed(std::min(maxSpeed, currentSpeed + 10.f));
     }
   }
 }

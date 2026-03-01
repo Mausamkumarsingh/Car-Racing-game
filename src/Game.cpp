@@ -17,6 +17,7 @@ static sf::Vector2f projectToScreen(sf::Vector2f worldPos) {
   return sf::Vector2f(screenX, worldPos.y);
 }
 
+
 Game::Game()
     : mWindow(sf::VideoMode(800, 600), "AI Racing Game - C++ SFML"),
       mState(Menu), mScore(0.f), mDistance(0.f), mCarsPassed(0), mLevel(1), mHighScore(0),
@@ -315,10 +316,10 @@ void Game::update(sf::Time deltaTime) {
         EnemyCar::Direction dir =
             (laneIndex < 2) ? EnemyCar::SameWay : EnemyCar::Oncoming;
 
-        float baseSpeed = 200.f + (rand() % 200);
+        float baseSpeed = 160.f + (rand() % 140);
 
         if (dir == EnemyCar::SameWay)
-          baseSpeed = 150.f + (rand() % 150);
+          baseSpeed = 120.f + (rand() % 100);
         float speed = baseSpeed * difficultyScalar;
 
         auto enemy = std::make_shared<EnemyCar>(laneX, -150.f, speed, dir);
